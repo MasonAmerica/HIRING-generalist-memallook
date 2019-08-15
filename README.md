@@ -27,8 +27,10 @@ allocated, the tool returns an error.
 The second command `dealloc` deallocates a previously allocated block with tag `T`. If `T` is
 unknown, this is an error.
 
-The third form displays the state of the memory on the terminal using a simple character matrix
-with an `x` displaying an occupied page, and a `.` implying a free page (see example below).
+The third command displays the state of the memory on the terminal using a simple character matrix
+with an `x` displaying an occupied page, and a tag character implying a free page (see example below).
+This grid/matrix is then followed by a listing of all tags allocated and the number of bytes
+allocated for each.
 
 The last form clears any maintained state and starts over, causing the tool to expect values
 for `p` and `N` for the next invocation.
