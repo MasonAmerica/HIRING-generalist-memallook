@@ -175,8 +175,9 @@ You may use any of the following languages:
 If you have a different one you prefer, please contact your interviewer.
 
 ## DOs
-* Fork this repo to your own user space, make it private (now possible with free accounts
-  as well), and add @scorpiodawg and/or @trevorhalvorson as an outside collaborator
+* Fork this repo to your own user space, and add @scorpiodawg and/or @trevorhalvorson as an
+  outside collaborator. If you prefer to keep your work private, you may [duplicate](https://help.github.com/en/articles/duplicating-a-repository)
+  it instead and add us as collaborators.
 * Push all changes to the `master` branch of your fork, and let us know when you're ready
   to officially submit. We will fork your repo and review your code. Changes made after that
   will likely be ignored, so please do submit only after you are ready
