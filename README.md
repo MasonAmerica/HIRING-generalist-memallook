@@ -53,6 +53,9 @@ $ memallook show
 ................
 ................
 
+<Allocations by tag>
+1: 16 bytes
+
 $ memallook alloc 32
 ok, tag = "2"
 
@@ -61,6 +64,10 @@ $ memallook show
 ................
 ................
 ................
+
+<Allocations by tag>
+1: 16 bytes
+2: 32 bytes
 
 $ memallook dealloc 1
 deallocation succeeded
@@ -73,6 +80,9 @@ $ memallook show
 ................
 ................
 ................
+
+<Allocations by tag>
+2: 32 bytes
 
 ```
 
@@ -109,6 +119,9 @@ $ memallook show
 ................
 ................
 
+<Allocations by tag>
+1: 160 bytes
+
 $ memallook alloc 32
 ok, tag = "2"
 
@@ -117,6 +130,10 @@ $ memallook show
 ................
 ................
 ................
+
+<Allocations by tag>
+1: 160 bytes
+2: 32 bytes
 
 $ memallook dealloc 1
 deallocation succeeded
@@ -127,6 +144,9 @@ $ memallook show
 ................
 ................
 
+<Allocations by tag>
+2: 32 bytes
+
 $ memallook defrag
 defragmentation complete
 
@@ -135,6 +155,9 @@ $ memallook show
 ................
 ................
 ................
+
+<Allocations by tag>
+2: 32 bytes
 
 ```
 
