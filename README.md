@@ -1,4 +1,4 @@
-Mason Engineering - Embedded Engineer exercise ("Memallook")
+Mason Engineering - Embedded Engineer exercise
 ===
 
 # "Memallook" - a visual memalloc simulation
@@ -19,7 +19,6 @@ Subsequent invocations can be in one of these forms:
 2. `memallook dealloc T`
 3. `memallook show`
 4. `memallook clear`
-
 
 The first command `alloc` "allocates" a block of `M` bytes in the memory buffer and returns
 a unique tag `T` which sort of can be treated like a pointer. If `M` bytes can no longer be
@@ -142,6 +141,13 @@ $ memallook show
 # Submission
 
 You are to build a small program that can be run from the command line as described above.
+You may use any of the following languages:
+
+* C/C++
+* Golang
+* Rust
+
+If you have a different one you prefer, please contact your interviewer.
 
 ## DOs
 * Fork this repo to your own user space, make it private (now possible with free accounts
