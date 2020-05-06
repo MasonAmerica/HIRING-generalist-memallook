@@ -170,9 +170,10 @@ Unless you have been instructed otherwise, you may use any of the following lang
 
 * C/C++
 * Golang
-* Rust
 * Java
-* Python
+* Python 2/3
+* Rust
+* Kotlin
 
 If you have a different one you prefer, please contact your interviewer.
 
