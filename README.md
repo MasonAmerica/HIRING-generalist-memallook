@@ -1,4 +1,4 @@
-Mason Engineering - Embedded Engineer exercise
+Mason Engineering - Software Engineer exercise
 ===
 
 # "Memallook" - a visual memalloc simulation
