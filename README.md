@@ -166,17 +166,20 @@ $ memallook show
 # Submission
 
 You are to build a small program that can be run from the command line as described above.
-You may use any of the following languages:
+Unless you have been instructed otherwise, you may use any of the following languages:
 
 * C/C++
 * Golang
 * Rust
+* Java
+* Python
 
 If you have a different one you prefer, please contact your interviewer.
 
 ## DOs
 * Fork this repo to your own user space, and add @scorpiodawg and/or @trevorhalvorson as an
-  outside collaborator. If you prefer to keep your work private, you may [duplicate](https://help.github.com/en/articles/duplicating-a-repository)
+  outside collaborator. If you prefer to keep your work private, you may
+  [duplicate](https://help.github.com/en/articles/duplicating-a-repository)
   it instead and add us as collaborators.
 * Push all changes to the `master` branch of your fork, and let us know when you're ready
   to officially submit. We will fork your repo and review your code. Changes made after that
