@@ -178,7 +178,7 @@ Unless you have been instructed otherwise, you may use any of the following lang
 If you have a different one you prefer, please contact your interviewer.
 
 ## DOs
-* Fork this repo to your own user space, and add @djcarrollmason and kylelgrah@gmail.com as an
+* Fork this repo to your own user space, and add @djcarrollmason and @kgrah as an
   outside collaborator. If you prefer to keep your work private, you may
   [duplicate](https://help.github.com/en/articles/duplicating-a-repository)
   it instead and add us as collaborators.
