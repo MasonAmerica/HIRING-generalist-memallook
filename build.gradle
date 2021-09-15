@@ -1,0 +1,12 @@
+subprojects {
+    apply plugin: 'java'
+
+    tasks.withType(JavaCompile) {
+        options.encoding = 'UTF-8'
+    }
+}
+
+wrapper {
+    // https://gradle.org/releases
+    gradleVersion = '6.3'
+}
