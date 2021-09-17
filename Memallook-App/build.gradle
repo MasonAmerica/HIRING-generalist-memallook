@@ -1,6 +1,8 @@
 plugins {
     id 'java'
-    id  'application'
+    id 'application'
+    id "com.github.johnrengelman.shadow"
+
 }
 
 mainClassName = 'com.example.memallook.Main'

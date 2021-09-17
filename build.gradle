@@ -1,3 +1,16 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        // https://plugins.gradle.org/plugin/com.github.johnrengelman.shadow
+        classpath "com.github.jengelman.gradle.plugins:shadow:5.2.0"
+    }
+}
+
 subprojects {
     apply plugin: 'java'
 
