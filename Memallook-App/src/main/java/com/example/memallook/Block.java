@@ -1,10 +1,23 @@
 package com.example.memallook;
 
+import java.util.Objects;
+
 public class Block implements Comparable<Block> {
 
     private Character pointer;
     private int index;
     private int sizeInPages;
+
+    public Block(Character pointer, int index, int sizeInPages) {
+        this.pointer = pointer;
+        this.index = index;
+        this.sizeInPages = sizeInPages;
+    }
+
+    //For testing only
+    Block(int sizeInPages) {
+        this.sizeInPages = sizeInPages;
+    }
 
     public boolean isOccupied() {
         return pointer != null;
@@ -40,5 +53,20 @@ public class Block implements Comparable<Block> {
     public Block setSizeInPages(int sizeInPages) {
         this.sizeInPages = sizeInPages;
         return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Block block = (Block) o;
+        return index == block.index &&
+                sizeInPages == block.sizeInPages &&
+                Objects.equals(pointer, block.pointer);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(pointer, index, sizeInPages);
     }
 }
