@@ -25,7 +25,12 @@ public class Block implements Comparable<Block> {
 
     @Override
     public int compareTo(Block that) {
-        return this.sizeInPages - that.sizeInPages;
+        int difference = this.sizeInPages - that.sizeInPages;
+        if (difference != 0) {
+            return difference;
+        } else {
+            return this.index - that.index;
+        }
     }
 
     public Character getPointer() {

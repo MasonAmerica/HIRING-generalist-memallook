@@ -9,6 +9,7 @@ import java.util.Map;
 public class Memallook {
 
     private static final int MAX_ROW_LENGTH = 150;
+    private static final int UNALLOCATED_PAGE_CHARACTER = '.';
     private static final List<Character> POINTERS = new ArrayList<>();
     static {
         for(int i = 0; i < 26; i++) {
@@ -57,8 +58,8 @@ public class Memallook {
         this.availablePointers = new ArrayList<>(POINTERS);
     }
 
-    public void alloc(int blockSize) {
-        int sizeOfNewBlock = (blockSize / pageSize) + 1;
+    public char alloc(int blockSize) throws Exception {
+        int sizeOfNewBlock = (blockSize / pageSize - 1) + 1;
 
         //Find the unoccupied block CLOSEST TO YOUR SIZE that fits you
         // -> traverse the BST, get a candidate
@@ -72,8 +73,7 @@ public class Memallook {
             }
         }
         if (emptySpaceToUse == null) {
-            System.out.println("Not enough space");
-            return;
+            throw new RuntimeException("Not enough space");
         }
 
         int blockListPlacementIndex = emptySpaceToUse.getIndex();
@@ -84,14 +84,15 @@ public class Memallook {
         Character nextPointer = availablePointers.remove(0);
         Block newOccupiedBlock = new Block(nextPointer, blockListPlacementIndex, sizeOfNewBlock);
         blockList.add(blockListPlacementIndex, newOccupiedBlock);
+        occupiedBlockIndex.put(nextPointer, newOccupiedBlock);
         updateDownstreamIndices(blockListPlacementIndex + 1);
 
         // update the unoccupied block to have a smaller size (and possibly its index (either incremented or decremented)
         // -> the BST should sort this out (literally haha)
-        emptySpaceToUse.setIndex(emptySpaceToUse.getIndex() + 1);
         emptySpaceToUse.setSizeInPages(emptySpaceToUse.getSizeInPages() - sizeOfNewBlock);
         unoccupiedBlockList.add(emptySpaceToUse);
         unoccupiedBlockList.sort(Block::compareTo);
+        return nextPointer;
     }
 
     private void updateDownstreamIndices(int startingIndex) {
@@ -110,35 +111,48 @@ public class Memallook {
         }
         availablePointers.add(blockToDeallocate.getPointer());
 
-        // -> CHECK for adjacent unoccupied's and merge them if necessary
         int deallocatedBlockIndex = blockToDeallocate.getIndex();
-        if (deallocatedBlockIndex > 0 && blockList.get(deallocatedBlockIndex - 1).getPointer() == null) {
+        // If the block to the left is nonexistent or occupied AND the block to the right is nonexistent or occupied,
+        //simply swap it out
+        if ((deallocatedBlockIndex == 0 || blockList.get(deallocatedBlockIndex - 1).getPointer() != null) &&
+                (deallocatedBlockIndex + 1 == blockList.size() || blockList.get(deallocatedBlockIndex + 1).getPointer() != null)) {
+            blockToDeallocate.setPointer(null);
+        }
+        // -> CHECK for adjacent unoccupied's and merge them if necessary
+        if (deallocatedBlockIndex - 1 > 0 && blockList.get(deallocatedBlockIndex - 1).getPointer() == null) {
             //We're absorbing the block to the left. We reference that block from index-1. We update the block at the
             //given index. But once we remove the block at index-1, the index of this block becomes index - 1
             deallocatedBlockIndex = deallocatedBlockIndex - 1;
-            Block emptyLeftBlockToMerge = blockList.get(deallocatedBlockIndex);
+            Block emptyLeftBlockToMerge = blockList.remove(deallocatedBlockIndex);
+            unoccupiedBlockList.remove(emptyLeftBlockToMerge);
             blockToDeallocate.setSizeInPages(blockToDeallocate.getSizeInPages() + emptyLeftBlockToMerge.getSizeInPages());
             blockToDeallocate.setPointer(null);
             blockToDeallocate.setIndex(deallocatedBlockIndex);
-            blockList.remove(deallocatedBlockIndex);
         }
         if (deallocatedBlockIndex < blockList.size() - 1 && blockList.get(deallocatedBlockIndex + 1).getPointer() == null) {
-            Block emptyRightBlockToMerge = blockList.get(deallocatedBlockIndex + 1);
+            Block emptyRightBlockToMerge = blockList.remove(deallocatedBlockIndex + 1);
+            unoccupiedBlockList.remove(emptyRightBlockToMerge);
             blockToDeallocate.setSizeInPages(blockToDeallocate.getSizeInPages() + emptyRightBlockToMerge.getSizeInPages());
             blockToDeallocate.setPointer(null);
-            blockList.remove(deallocatedBlockIndex + 1);
         }
+        unoccupiedBlockList.add(blockToDeallocate);
+        unoccupiedBlockList.sort(Block::compareTo);
         updateDownstreamIndices(deallocatedBlockIndex);
     }
 
-    public void show(PrintStream out) {
+    public String getFullBuffer() {
         //iterate over the blocklist, creating a sequence of characters by putting one for each block's pointer's value
         // do a little square root rounding and loop over the list we created to print it out nicely
         StringBuilder stringBuilder = new StringBuilder();
         for (Block block : blockList) {
-            stringBuilder.append(String.valueOf(block.getPointer()).repeat(block.getSizeInPages()));
+            Character pointer = block.getPointer() == null ? UNALLOCATED_PAGE_CHARACTER : block.getPointer();
+            stringBuilder.append(String.valueOf(pointer).repeat(block.getSizeInPages()));
         }
-        String fullBuffer = stringBuilder.toString();
+        return stringBuilder.toString();
+    }
+
+    public void show(PrintStream out) {
+        String fullBuffer = getFullBuffer();
 
         int rowLength = Math.min(MAX_ROW_LENGTH, (int) Math.sqrt(fullBuffer.length()));
         int startingIndex = 0;
@@ -146,6 +160,8 @@ public class Memallook {
             out.println(fullBuffer.substring(startingIndex, Math.min(rowLength*i, fullBuffer.length())));
         }
     }
+
+
 
     public void clear() {
         //Just torch as much memory as we can? This should really be happening with a constructor and stuff.
