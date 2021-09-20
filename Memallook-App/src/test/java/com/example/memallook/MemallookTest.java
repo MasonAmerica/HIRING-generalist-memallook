@@ -40,7 +40,7 @@ public class MemallookTest {
         memallook.alloc(16);
         memallook.alloc(32);
 
-        String expectedBuffer2 = "dee.bbc.";
+        String expectedBuffer2 = "ee..bbcd";
         String bufferDump2 = memallook.getFullBuffer();
         assertEquals(expectedBuffer2, bufferDump2);
 
