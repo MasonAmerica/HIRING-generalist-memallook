@@ -42,7 +42,7 @@ public class Memallook {
         }
         int sizeOfNewBlock = ((blockSize - 1) / pageSize) + 1;
 
-        //Find the smallest block  that fits you
+        //Find the smallest block that fits you
         Block emptySpaceToUse = null;
         for (int i = 0; i < unoccupiedBlockList.size(); i++) {
             Block candidateBlock = unoccupiedBlockList.get(i);
