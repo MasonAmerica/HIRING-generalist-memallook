@@ -59,7 +59,10 @@ public class Memallook {
     }
 
     public char alloc(int blockSize) throws Exception {
-        int sizeOfNewBlock = (blockSize / pageSize - 1) + 1;
+        if (blockSize < 1) {
+            throw new RuntimeException("Aborting allocation of 0 or less bytes.");
+        }
+        int sizeOfNewBlock = ((blockSize - 1) / pageSize) + 1;
 
         //Find the unoccupied block CLOSEST TO YOUR SIZE that fits you
         // -> traverse the BST, get a candidate
@@ -158,6 +161,7 @@ public class Memallook {
         int startingIndex = 0;
         for(int i = 1; i <= (fullBuffer.length() / rowLength) + 1; i++) {
             out.println(fullBuffer.substring(startingIndex, Math.min(rowLength*i, fullBuffer.length())));
+            startingIndex = rowLength*i;
         }
     }
 
