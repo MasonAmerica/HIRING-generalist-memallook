@@ -19,6 +19,7 @@ public class MemallookTest {
         assertEquals(expectedBuffer, firstBufferDump);
         try {
             memallook.alloc(32);
+            fail("There shouldn't be enough space to successfully place 32 bytes.");
         } catch (RuntimeException e) {
             assertEquals("Not enough space", e.getMessage());
         }
@@ -44,10 +45,12 @@ public class MemallookTest {
         String bufferDump2 = memallook.getFullBuffer();
         assertEquals(expectedBuffer2, bufferDump2);
 
-        try {
-            memallook.alloc(32);
-        } catch (RuntimeException e) {
-            assertEquals("Not enough space", e.getMessage());
-        }
+        memallook.alloc(32);
+
+        String expectedBuffer3 = "eeffbbcd";
+        String bufferDump3 = memallook.getFullBuffer();
+        assertEquals(expectedBuffer3, bufferDump3);
+
+
     }
 }
